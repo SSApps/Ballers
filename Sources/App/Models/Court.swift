@@ -16,7 +16,7 @@ final class Court: Codable {
         self.courtName = courtName
         self.address = address
         self.ballers = 0
-        print("")
+ 
     }
 }
 
