@@ -1,6 +1,6 @@
 
 import Vapor
-import FluentSQLite
+import FluentMySQL
 
 final class Court: Codable {
     
@@ -20,6 +20,6 @@ final class Court: Codable {
     }
 }
 
-extension Court: SQLiteModel {}
+extension Court: MySQLModel {}
 extension Court: Migration {}
 extension Court: Content {}
