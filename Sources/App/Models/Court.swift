@@ -1,6 +1,6 @@
 
 import Vapor
-import FluentMySQL
+import FluentPostgreSQL
 
 final class Court: Codable {
     
@@ -20,6 +20,7 @@ final class Court: Codable {
     }
 }
 
-extension Court: MySQLModel {}
+extension Court: PostgreSQLModel {}
 extension Court: Migration {}
 extension Court: Content {}
+extension Court: Parameter {}

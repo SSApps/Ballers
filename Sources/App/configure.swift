@@ -1,5 +1,6 @@
-import FluentMySQL
+import FluentPostgreSQL
 import Vapor
+import Authentication
 
 public func configure(
     _ config: inout Config,
@@ -7,11 +8,12 @@ public func configure(
     _ services: inout Services
     ) throws {
     // 2
-    try services.register(FluentMySQLProvider())
+    try services.register(FluentPostgreSQLProvider())
     
     let router = EngineRouter.default()
     try routes(router)
     services.register(router, as: Router.self)
+    
     
     var middlewares = MiddlewareConfig()
     middlewares.use(ErrorMiddleware.self)
@@ -19,17 +21,33 @@ public func configure(
     
     var databases = DatabasesConfig()
     // 3
-    let databaseConfig = MySQLDatabaseConfig(
+    
+    let databaseConfig = PostgreSQLDatabaseConfig(
         hostname: "localhost",
+        port: 5432,
         username: "vapor",
+        database: "vapor",
         password: "password",
-        database: "vapor")
-    let database = MySQLDatabase(config: databaseConfig)
-    databases.add(database: database, as: .mysql)
+        
+        transport: .cleartext)
+    
+    let database = PostgreSQLDatabase(config: databaseConfig)
+    databases.add(database: database, as: .psql)
     services.register(databases)
     var migrations = MigrationConfig()
     // 4
-    migrations.add(model: Court.self, database: .mysql)
+    migrations.add(model: Court.self, database: .psql)
+    migrations.add(model: User.self, database: .psql)
+    migrations.add(model: Token.self, database: .psql)
     services.register(migrations)
+    
+    
+    var commandConfig = CommandConfig.default()
+    commandConfig.useFluentCommands()
+    services.register(commandConfig)
+    
+    try services.register(AuthenticationProvider())
+    
+    
 }
 
