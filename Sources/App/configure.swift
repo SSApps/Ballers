@@ -9,6 +9,8 @@ public func configure(
     ) throws {
     // 2
     try services.register(FluentPostgreSQLProvider())
+    let serverConfigure = NIOServerConfig.default(hostname: "192.168.0.13", port: 8080)
+    services.register(serverConfigure)
     
     let router = EngineRouter.default()
     try routes(router)
@@ -28,7 +30,6 @@ public func configure(
         username: "vapor",
         database: "vapor",
         password: "password",
-        
         transport: .cleartext)
     
     let database = PostgreSQLDatabase(config: databaseConfig)
@@ -39,6 +40,7 @@ public func configure(
     migrations.add(model: Court.self, database: .psql)
     migrations.add(model: User.self, database: .psql)
     migrations.add(model: Token.self, database: .psql)
+    migrations.add(migration: AdminUser.self, database: .psql)
     services.register(migrations)
     
     
