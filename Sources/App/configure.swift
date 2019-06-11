@@ -9,8 +9,8 @@ public func configure(
     ) throws {
     // 2
     try services.register(FluentPostgreSQLProvider())
-    let serverConfigure = NIOServerConfig.default(hostname: "192.168.0.13", port: 8080)
-    services.register(serverConfigure)
+   // let serverConfigure = NIOServerConfig.default(hostname: "192.168.0.13", port: 8080)
+    //services.register(serverConfigure)
     
     let router = EngineRouter.default()
     try routes(router)

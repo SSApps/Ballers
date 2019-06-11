@@ -9,13 +9,16 @@ final class Court: Codable {
     var courtName: String
     var address: String
     var ballers: Int
+   // var users: [User.ID]?
     
     
-    init(courtName: String, address: String){
+    init(courtName: String, address: String ){
         
         self.courtName = courtName
         self.address = address
         self.ballers = 0
+       // self.users = users
+        //
  
     }
 }
