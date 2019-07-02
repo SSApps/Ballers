@@ -9,7 +9,7 @@ public func configure(
     ) throws {
     // 2
     try services.register(FluentPostgreSQLProvider())
-   // let serverConfigure = NIOServerConfig.default(hostname: "192.168.0.13", port: 8080)
+    //let serverConfigure = NIOServerConfig.default(hostname: "192.168.0.13", port: 8080)
     //services.register(serverConfigure)
     
     let router = EngineRouter.default()
@@ -24,13 +24,30 @@ public func configure(
     var databases = DatabasesConfig()
     // 3
     
+    let hostname = Environment.get("DATABASE_HOSTNAME") ?? "localhost"
+    let username = Environment.get("DATABASE_USER") ?? "vapor"
+    let password = Environment.get("DATABASE_PASSWORD") ?? "password"
+    let databaseName: String
+    let databasePort: Int
+    if(env == .testing){
+        databaseName = "vapor-test"
+        if let testPort = Environment.get("DATABASE_PORT"){
+            databasePort = Int(testPort) ?? 5433
+        }else{
+            databasePort = 5433
+        }
+    } else{
+        databaseName = Environment.get("DATABASE_DB") ?? "vapor"
+        databasePort = 5432
+    }
+    
     let databaseConfig = PostgreSQLDatabaseConfig(
-        hostname: "localhost",
+        hostname: hostname,
         port: 5432,
-        username: "vapor",
-        database: "vapor",
-        password: "password",
-        transport: .cleartext)
+        username: username,
+        database: databaseName,
+        password: password,
+        transport: .cleartext)//.cleartext)
     
     let database = PostgreSQLDatabase(config: databaseConfig)
     databases.add(database: database, as: .psql)
