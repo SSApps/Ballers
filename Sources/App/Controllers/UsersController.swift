@@ -20,9 +20,7 @@ struct UsersController: RouteCollection {
         
         let tokenAuthMiddleware = User.tokenAuthMiddleware()
         let guardAuthMiddleware = User.guardAuthMiddleware()
-        let tokenAuthGroup = usersRoute.grouped(
-            tokenAuthMiddleware,
-            guardAuthMiddleware)
+        let tokenAuthGroup = usersRoute.grouped(tokenAuthMiddleware,guardAuthMiddleware)
         tokenAuthGroup.post(User.self, use: createHandler)
         tokenAuthGroup.put(User.parameter, Court.parameter, use: UpdateHandler)
     }

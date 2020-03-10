@@ -116,6 +116,6 @@ struct AdminUser: Migration {
         -> Future<Void> {
             return .done(on: connection)
     }
-}
+}//G2geoJVqioEgtIlTmBeePQ==
 
 
