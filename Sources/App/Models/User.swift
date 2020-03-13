@@ -100,16 +100,35 @@ struct AdminUser: Migration {
             guard let hashedPassword = password else {
                 fatalError("Failed to create admin user")
             }
-            let court = Court(courtName: "Mother", address: "123 Fake street", id: UUID())
+            var court: Court?
+           // for _ in 1..<10{
+                 court = Court(courtName: "24 Hour Fitness Nordhoff", address: "19350 Nordhoff St Unit D, Northridge, CA 91324", id: UUID(),latitude: 34.234150, longitude: -118.555649)
             // 6
-            court.create(on: connection)            // 5
+                    court?.create(on: connection)
+            
+            court = Court(courtName: "Crunch Fitness Nordhoff", address: "20914 Nordhoff St, Chatsworth, CA 91311", id: UUID(),latitude: 34.234791, longitude: -118.589310)
+                      // 6
+                              court?.create(on: connection)
+            court = Court(courtName: "24 Hour Fitness Topanga", address: "6220 CA-27 #2410, Woodland Hills, CA 91367", id: UUID(),latitude: 34.183510, longitude: -118.605870)
+                      // 6
+                              court?.create(on: connection)
+            court = Court(courtName: "LA Fitness Woodland Hills", address: "6401 Canoga Ave, Woodland Hills, CA 9136", id: UUID(),latitude: 34.187260, longitude: -118.597810)
+                      // 6
+                              court?.create(on: connection)
+            court = Court(courtName: "LA Fitness Northridge", address: "18679 Devonshire St, Northridge, CA 91324", id: UUID(),latitude: 34.258511, longitude: -118.539993)
+                      // 6
+                              court?.create(on: connection)	
+            // 5
+          //  }
             let user = User(
                 name: "Admin",
                 username: "admin",
                 password: hashedPassword,
-                courtID: court.id)
+                courtID: court!.id)
+            
             // 6
             return user.save(on: connection).transform(to: ())
+            
     }
     // 7
     static func revert(on connection: PostgreSQLConnection)

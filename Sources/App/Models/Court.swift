@@ -9,19 +9,24 @@ final class Court: Codable {
     var courtName: String
     var address: String
     var ballers: Int
+    var latitude: Float
+    var longitude: Float
     
     
-    
-    init(courtName: String, address: String, id: UUID ){
+    init(courtName: String, address: String, id: UUID, latitude: Float, longitude: Float ){
         
         self.courtName = courtName
         self.address = address
         self.ballers = 0
+        self.latitude = latitude
+        self.longitude = longitude
         
         self.id  = id
         
  
     }
+    
+
 }
 
 extension Court{
